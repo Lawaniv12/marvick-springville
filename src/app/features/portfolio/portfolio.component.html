@@ -1,0 +1,37 @@
+<div class="portfolio-page">
+  <div class="page-hero">
+    <div class="container mx-auto px-6 lg:px-16 py-24 text-center">
+      <p class="section-label">Our Portfolio</p>
+      <h1 class="section-title text-center" style="font-size: clamp(2.5rem,5vw,4rem)">
+        Real Websites. <span class="text-gold">Real Businesses.</span>
+      </h1>
+      <p class="text-muted mt-4 max-w-xl mx-auto leading-relaxed font-light">
+        Every project here is live, verified, and built by Marvick Springville. Click any card to visit the real site.
+      </p>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-6 lg:px-16 pb-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (p of projects(); track p.id) {
+        <div class="port-card f-card rounded-sm overflow-hidden cursor-pointer group" (click)="open(p.url)">
+          <div class="port-thumb bg-gradient-to-br {{ p.gradient }}">
+            @if (!isFailed(p.id)) {
+              <img [src]="p.screenshotUrl" [alt]="p.title" class="port-img" [class.loaded]="isLoaded(p.id)"
+                (load)="onLoad(p.id)" (error)="onError(p.id)" loading="lazy"/>
+            }
+            <div class="port-overlay">
+              <span class="visit-pill">Visit Live Site ↗</span>
+            </div>
+            <span class="port-badge">{{ p.category }}</span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-semibold mb-1 group-hover:text-gold transition-colors">{{ p.title }}</h3>
+            <p class="text-muted text-sm leading-relaxed font-light mb-3">{{ p.desc }}</p>
+            <span class="port-tag">{{ p.tag }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

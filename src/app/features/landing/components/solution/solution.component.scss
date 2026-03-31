@@ -1,0 +1,26 @@
+.solution-section {
+  background: var(--surface); position: relative; overflow: hidden;
+  &::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(29,78,216,0.07) 1px, transparent 1px);
+    background-size: 40px 40px; pointer-events: none;
+  }
+}
+.scan-line {
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--blue) 50%, transparent 100%); opacity: 0.3;
+}
+.feature-card { padding: 0; position: relative; transition: transform 0.2s; &:hover { transform: translateY(-4px); } &:hover .feat-bar { width: 100%; } }
+.feat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: rgba(29,78,216,0.15); line-height: 1; }
+.feat-bar { width: 32px; height: 2px; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width 0.4s ease; margin-top: 0.5rem; }
+.feature-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-top: 0.75rem; margin-bottom: 0.4rem; }
+.feature-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+.tech-strip {
+  display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+  padding: 1.5rem 2rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+}
+.tech-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-right: 0.5rem; }
+.tech-badge {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em; padding: 0.25rem 0.75rem;
+  background: rgba(8,145,178,0.06); border: 1px solid rgba(8,145,178,0.2); color: var(--cyan); border-radius: 4px;
+}

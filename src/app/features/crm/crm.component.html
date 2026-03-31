@@ -1,0 +1,241 @@
+<div class="crm-page">
+
+  <!-- Header -->
+  <div class="crm-header">
+    <div class="crm-header-left">
+      <h1>Lead Tracker</h1>
+      <p class="crm-subtitle">Every person who showed interest in Marvick Springville</p>
+    </div>
+    <div class="crm-header-actions">
+      <button class="btn-export" (click)="exportCSV()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Export CSV
+      </button>
+      <button class="btn-add" (click)="addManualLead()">
+        + Add Lead
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats row -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num">{{ stats().total }}</div>
+      <div class="stat-label">Total Leads</div>
+    </div>
+    <div class="stat-card stat-card-blue">
+      <div class="stat-num">{{ stats().paid }}</div>
+      <div class="stat-label">Booking Paid</div>
+    </div>
+    <div class="stat-card stat-card-green">
+      <div class="stat-num">{{ stats().completed }}</div>
+      <div class="stat-label">Completed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{{ stats().conversion }}%</div>
+      <div class="stat-label">Conversion Rate</div>
+    </div>
+    <div class="stat-card stat-card-pipeline">
+      <div class="stat-num pipeline-num">{{ stats().pipeline }}</div>
+      <div class="stat-label">Revenue Pipeline</div>
+    </div>
+  </div>
+
+  <!-- Filters + Search -->
+  <div class="crm-toolbar">
+    <div class="filter-tabs">
+      <button class="filter-tab" [class.active]="filterStatus() === 'all'" (click)="setFilter('all')">
+        All <span class="tab-count">{{ leads().length }}</span>
+      </button>
+      @for (s of statuses; track s) {
+        <button class="filter-tab" [class.active]="filterStatus() === s" (click)="setFilter(s)">
+          {{ statusLabel(s) }}
+          <span class="tab-count">{{ leads() | statusCount:s }}</span>
+        </button>
+      }
+    </div>
+    <div class="search-box">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+        <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.3"/>
+        <path d="M10.5 10.5L13 13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <input type="text" placeholder="Search by name, phone, business..." [value]="searchQuery()" (input)="searchQuery.set($any($event.target).value)"/>
+    </div>
+  </div>
+
+  <!-- Main content: table + detail panel -->
+  <div class="crm-body" [class.with-panel]="selectedLead()">
+
+    <!-- Leads table -->
+    <div class="leads-table-wrap">
+      @if (filteredLeads().length === 0) {
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <p>No leads found. Leads appear here automatically when someone completes the interest form on your website.</p>
+        </div>
+      } @else {
+        <table class="leads-table">
+          <thead>
+            <tr>
+              <th>Contact</th>
+              <th>Business</th>
+              <th>Package</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (lead of filteredLeads(); track lead.id) {
+              <tr [class.row-selected]="selectedLead()?.id === lead.id" (click)="select(lead)">
+                <td>
+                  <div class="lead-contact">
+                    <div class="lead-avatar" [style.background]="statusBg(lead.status)" [style.color]="statusColor(lead.status)">
+                      {{ lead.fullName[0] }}
+                    </div>
+                    <div>
+                      <div class="lead-name">{{ lead.fullName }}</div>
+                      <div class="lead-phone">{{ lead.phone }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="lead-biz">{{ lead.businessName }}</div>
+                  <div class="lead-biz-type">{{ lead.businessType }}</div>
+                </td>
+                <td>
+                  <span class="pkg-chip">{{ lead.package ?? lead.serviceWanted }}</span>
+                  @if (lead.packagePrice) {
+                    <div class="pkg-price">{{ lead.packagePrice }}</div>
+                  }
+                </td>
+                <td>
+                  <span class="status-badge"
+                    [style.color]="statusColor(lead.status)"
+                    [style.background]="statusBg(lead.status)">
+                    {{ statusLabel(lead.status) }}
+                  </span>
+                </td>
+                <td class="date-cell">{{ timeAgo(lead.createdAt) }}</td>
+                <td class="actions-cell" (click)="$event.stopPropagation()">
+                  <button class="action-btn action-wa"  (click)="openWhatsApp(lead)" title="WhatsApp">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.523 5.847L.057 23.886a.5.5 0 00.613.613l6.04-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.886 0-3.65-.502-5.17-1.381l-.37-.217-3.833.93.93-3.833-.217-.37A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+                  </button>
+                  <button class="action-btn action-call" (click)="call(lead)" title="Call">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="15" height="15"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.08 1.22 2 2 0 012.07 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.1 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  @if (hasNext(lead.status)) {
+                    <button class="action-btn action-next" (click)="markNextStatus(lead)" [title]="'Mark as ' + nextLabel(lead.status)">
+                      → {{ nextLabel(lead.status) }}
+                    </button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+
+    <!-- Detail panel -->
+    @if (selectedLead()) {
+      <div class="detail-panel">
+        <div class="detail-header">
+          <div class="detail-avatar" [style.background]="statusBg(selectedLead()!.status)" [style.color]="statusColor(selectedLead()!.status)">
+            {{ selectedLead()!.fullName[0] }}
+          </div>
+          <div class="detail-title">
+            <h3>{{ selectedLead()!.fullName }}</h3>
+            <span class="status-badge"
+              [style.color]="statusColor(selectedLead()!.status)"
+              [style.background]="statusBg(selectedLead()!.status)">
+              {{ statusLabel(selectedLead()!.status) }}
+            </span>
+          </div>
+          <button class="detail-close" (click)="closeDetail()">✕</button>
+        </div>
+
+        <div class="detail-body">
+          <!-- Contact -->
+          <div class="detail-section">
+            <h4>Contact Info</h4>
+            <div class="detail-row"><span>Phone</span><a [href]="'tel:' + selectedLead()!.phone">{{ selectedLead()!.phone }}</a></div>
+            @if (selectedLead()!.email) {
+              <div class="detail-row"><span>Email</span><span>{{ selectedLead()!.email }}</span></div>
+            }
+            <div class="detail-row"><span>Business</span><span>{{ selectedLead()!.businessName }}</span></div>
+            <div class="detail-row"><span>Industry</span><span>{{ selectedLead()!.businessType }}</span></div>
+            <div class="detail-row"><span>Heard from</span><span>{{ selectedLead()!.heardFrom }}</span></div>
+          </div>
+
+          <!-- Project -->
+          <div class="detail-section">
+            <h4>Project Details</h4>
+            <div class="detail-row"><span>Service</span><span>{{ selectedLead()!.serviceWanted }}</span></div>
+            <div class="detail-row"><span>Budget</span><span>{{ selectedLead()!.budgetRange }}</span></div>
+            @if (selectedLead()!.package) {
+              <div class="detail-row"><span>Package</span><strong>{{ selectedLead()!.package }}</strong></div>
+              <div class="detail-row"><span>Price</span><strong class="text-blue-700">{{ selectedLead()!.packagePrice }}</strong></div>
+            }
+            @if (selectedLead()!.bookingFeePaid !== null && selectedLead()!.bookingFeePaid !== undefined) {
+              <div class="detail-row"><span>Booking Fee</span><span class="text-green-600 font-semibold">₦{{ selectedLead()!.bookingFeePaid | currency:'NGN':'symbol':'1.0-0' }} ✓</span></div>
+            }
+            @if (selectedLead()!.paymentRef) {
+              <div class="detail-row"><span>Ref</span><code>{{ selectedLead()!.paymentRef }}</code></div>
+            }
+            @if (selectedLead()!.message) {
+              <div class="detail-message">
+                <span>Message</span>
+                <p>{{ selectedLead()!.message }}</p>
+              </div>
+            }
+          </div>
+
+          <!-- Status controls -->
+          <div class="detail-section">
+            <h4>Update Status</h4>
+            <div class="status-buttons">
+              @for (s of statuses; track s) {
+                <button class="status-btn"
+                  [class.status-btn-active]="selectedLead()!.status === s"
+                  [style.border-color]="selectedLead()!.status === s ? statusColor(s) : ''"
+                  [style.color]="selectedLead()!.status === s ? statusColor(s) : ''"
+                  (click)="updateStatus(selectedLead()!, s)">
+                  {{ statusLabel(s) }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="detail-section">
+            <div class="notes-header">
+              <h4>Notes</h4>
+              <button class="notes-edit-btn" (click)="editingNote.set(!editingNote())">
+                {{ editingNote() ? 'Cancel' : 'Edit' }}
+              </button>
+            </div>
+            @if (editingNote()) {
+              <textarea class="notes-textarea" [(ngModel)]="notesDraft" [ngModel]="notesDraft()" (ngModelChange)="notesDraft.set($event)" rows="4" placeholder="Add your notes here — what was discussed, next steps, follow-up date..."></textarea>
+              <button class="notes-save-btn" (click)="saveNote()">Save Note</button>
+            } @else {
+              <p class="notes-text">{{ selectedLead()!.notes || 'No notes yet. Click Edit to add.' }}</p>
+            }
+          </div>
+
+          <!-- Quick actions -->
+          <div class="detail-actions">
+            <button class="detail-wa-btn" (click)="openWhatsApp(selectedLead()!)">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.523 5.847L.057 23.886a.5.5 0 00.613.613l6.04-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.886 0-3.65-.502-5.17-1.381l-.37-.217-3.833.93.93-3.833-.217-.37A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              WhatsApp Follow-up
+            </button>
+            <button class="detail-call-btn" (click)="call(selectedLead()!)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.08 1.22 2 2 0 012.07 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.1 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Call Now
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

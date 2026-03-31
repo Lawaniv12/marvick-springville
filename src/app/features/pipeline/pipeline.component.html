@@ -1,0 +1,47 @@
+<div class="pipeline-page">
+  <div class="pipeline-bg"></div>
+
+  <div class="container mx-auto px-6 py-12 relative z-10" style="max-width: 900px">
+
+    <!-- Page title -->
+    <div class="pipeline-title">
+      <div class="title-logo">MS</div>
+      <div>
+        <h1>Get Your Business Online</h1>
+        <p class="text-muted text-sm font-light">Complete in 3 steps · Takes about 5 minutes</p>
+      </div>
+    </div>
+
+    <!-- Step progress bar -->
+    @if (currentStep() !== 'success') {
+      <div class="step-progress">
+        @for (step of steps.slice(0, 3); track step.id; let i = $index) {
+          <div class="progress-step" [class.active]="isCurrent(step.id)" [class.done]="isComplete(step.id)">
+            <div class="progress-dot">
+              @if (isComplete(step.id)) {
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2 6l2.5 2.5L10 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              } @else {
+                {{ i + 1 }}
+              }
+            </div>
+            <span class="progress-label">{{ step.label }}</span>
+          </div>
+          @if (i < 2) { <div class="progress-line" [class.done]="isComplete(step.id)"></div> }
+        }
+      </div>
+    }
+
+    <!-- Step content -->
+    <div class="step-content">
+      @switch (currentStep()) {
+        @case ('info')    { <app-step-info /> }
+        @case ('package') { <app-step-package /> }
+        @case ('payment') { <app-step-payment /> }
+        @case ('success') { <app-step-success /> }
+      }
+    </div>
+
+  </div>
+</div>

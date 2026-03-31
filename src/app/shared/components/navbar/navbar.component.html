@@ -1,0 +1,36 @@
+<nav class="ms-nav" [class.scrolled]="scrolled()">
+  <div class="nav-inner">
+    <!-- Logo -->
+    <a routerLink="/" class="nav-logo">
+      <div class="logo-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect x="2" y="2" width="10" height="10" rx="1" fill="#1E3A8A" opacity="0.9"/>
+          <rect x="16" y="2" width="10" height="10" rx="1" fill="#1E3A8A" opacity="0.5"/>
+          <rect x="2" y="16" width="10" height="10" rx="1" fill="#1E3A8A" opacity="0.5"/>
+          <rect x="16" y="16" width="10" height="10" rx="1" fill="#1E3A8A" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">Marvick Springville</span>
+        <!-- <span class="logo-sub">Bespoke Websites &amp; App Solutions</span> -->
+      </div>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="nav-links" [class.open]="menuOpen()">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="menuOpen.set(false)">Home</a>
+      <a routerLink="/portfolio" routerLinkActive="active" (click)="menuOpen.set(false)">Our Work</a>
+      <a routerLink="/login" routerLinkActive="active" (click)="menuOpen.set(false)">Client Login</a>
+      <a routerLink="/get-started" class="nav-cta" (click)="menuOpen.set(false)">
+        Get Started <span class="cta-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button class="hamburger" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()">
+      <span [class.open]="menuOpen()"></span>
+      <span [class.open]="menuOpen()"></span>
+      <span [class.open]="menuOpen()"></span>
+    </button>
+  </div>
+</nav>

@@ -1,0 +1,42 @@
+<section id="solution" class="solution-section">
+  <div class="scan-line"></div>
+
+  <div class="container mx-auto px-6 lg:px-16 py-24 relative z-10">
+    <!-- Header -->
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 gap-6">
+      <div class="max-w-xl">
+        <p class="section-label">What We Build</p>
+        <h2 class="section-title">
+          A Platform That <span class="text-blue-800">Works While You Sleep</span>
+        </h2>
+      </div>
+      <p class="text-muted text-sm leading-relaxed font-light max-w-sm">
+        Every feature is designed around one goal: helping your business earn more, reach more,
+        and run smoother — automatically.
+      </p>
+    </div>
+
+    <!-- Divider -->
+    <div class="glow-line mb-16"></div>
+
+    <!-- Features grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      @for (feat of features; track feat.num) {
+        <div class="feature-card">
+          <div class="feat-num">{{ feat.num }}</div>
+          <div class="feat-bar"></div>
+          <h3 class="text-base font-semibold mb-2 mt-3">{{ feat.title }}</h3>
+          <p class="text-muted text-sm leading-relaxed font-light">{{ feat.desc }}</p>
+        </div>
+      }
+    </div>
+
+    <!-- Tech strip -->
+    <div class="tech-strip mt-20">
+      <span class="tech-label">Built with</span>
+      @for (tech of ['Angular', 'Microsoft SQL Server', 'WordPress', 'React', 'AWS', 'Figma']; track tech) {
+        <span class="tech-badge">{{ tech }}</span>
+      }
+    </div>
+  </div>
+</section>

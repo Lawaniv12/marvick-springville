@@ -1,1 +1,116 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ── Brand blue — trust, stability, authority ── */
+  --blue:        #1D4ED8;   /* primary action */
+  --blue-dark:   #1E3A8A;   /* deep navy — headings, logo */
+  --blue-mid:    #2563EB;   /* hover states */
+  --blue-light:  #3B82F6;   /* accents */
+  --blue-pale:   #EFF6FF;   /* backgrounds, badges */
+  --blue-border: #BFDBFE;   /* borders on blue surfaces */
+
+  /* ── Neutrals ── */
+  --text:        #0F172A;
+  --text-2:      #1E293B;
+  --text-3:      #334155;
+  --muted:       #64748B;
+  --muted-2:     #94A3B8;
+  --border:      #E2E8F0;
+  --border-2:    #CBD5E1;
+  --surface:     #FFFFFF;
+  --surface-2:   #F8FAFC;
+  --surface-3:   #F1F5F9;
+
+  /* ── Semantic ── */
+  --accent:      #DC2626;   /* urgency, errors */
+  --green:       #059669;   /* success, payment */
+  --amber:       #D97706;   /* warnings */
+  --gold:        #B45309;   /* kept for Playfair display headings only */
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--surface);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  @apply inline-flex items-center gap-2 px-7 py-3 rounded-lg font-semibold text-sm tracking-wide transition-all duration-200;
+  background: var(--blue);
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(29,78,216,0.3), 0 0 0 0 rgba(29,78,216,0);
+  &:hover {
+    background: var(--blue-mid);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(29,78,216,0.35);
+  }
+  &:active { transform: translateY(0); }
+}
+
+.btn-outline {
+  @apply inline-flex items-center gap-2 px-7 py-3 rounded-lg font-medium text-sm tracking-wide transition-all duration-200;
+  border: 1.5px solid var(--border-2);
+  color: var(--text-2);
+  background: var(--surface);
+  &:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-1px); }
+}
+
+.btn-ghost {
+  @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-sm transition-all duration-200;
+  color: var(--muted); background: transparent; border: none; cursor: pointer;
+  &:hover { color: var(--blue); }
+}
+
+/* ── Section helpers ── */
+.section-label {
+  @apply text-xs font-semibold tracking-widest uppercase mb-3;
+  color: var(--blue);
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700; line-height: 1.2; margin-bottom: 1rem;
+  color: var(--text);
+}
+
+/* ── Cards ── */
+.f-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  &:hover {
+    border-color: var(--blue-border);
+    box-shadow: 0 4px 24px rgba(29,78,216,0.08);
+    transform: translateY(-3px);
+  }
+}
+
+.glow-line  { height: 1px; background: var(--border); }
+.blue-line  { height: 3px; background: linear-gradient(90deg, var(--blue), var(--blue-light)); width: 48px; border-radius: 2px; }
+
+/* ── Animations ── */
+@keyframes pulse-blue {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%     { opacity: 0.5; transform: scale(1.4); }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-12px); }
+}
+@keyframes counter-glow {
+  0%,100% { box-shadow: 0 0 0 0 rgba(29,78,216,0); }
+  50%     { box-shadow: 0 0 0 4px rgba(29,78,216,0.12); }
+}
+@keyframes scroll-anim { 0% { top: -16px; } 100% { top: 48px; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pop  { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }

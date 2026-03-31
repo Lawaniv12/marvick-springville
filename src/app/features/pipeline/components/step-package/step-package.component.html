@@ -1,0 +1,94 @@
+<div class="step-package">
+
+  <!-- Personalised greeting -->
+  <div class="greeting-card">
+    <div class="greeting-avatar">{{ firstInitial }}</div>
+    <div>
+      <h3>Hi {{ firstName }} </h3>
+      <p class="text-muted text-sm font-light">
+        Based on your interest in <strong class="text-blue-700">{{ serviceWanted }}</strong>
+        and a budget of <strong class="text-blue-700">{{ budgetRange }}</strong>,
+        here's what we recommend — plus all options for you to choose from.
+      </p>
+    </div>
+  </div>
+
+  <!-- Recommended badge -->
+  @if (recommendedPkg()) {
+    <div class="rec-notice">
+      <span class="rec-tag">⭐ Recommended for you</span>
+      <strong>{{ recommendedPkg()?.name }}</strong> — {{ recommendedPkg()?.tagline }}
+    </div>
+  }
+
+  <!-- Package cards -->
+  <div class="pkg-grid">
+    @for (pkg of allPackages; track pkg.id) {
+      <div
+        class="pkg-card"
+        [class.pkg-selected]="isSelected(pkg)"
+        [class.pkg-recommended]="pkg.id === recommendedPkg()?.id"
+        (click)="select(pkg)"
+      >
+        @if (pkg.id === recommendedPkg()?.id) {
+          <div class="rec-ribbon">Recommended</div>
+        }
+        <div class="pkg-top">
+          <!-- <span class="pkg-icon">{{ pkg.icon }}</span> -->
+          <div>
+            <h4 class="pkg-name">{{ pkg.name }}</h4>
+            <p class="pkg-tagline">{{ pkg.tagline }}</p>
+          </div>
+          <div class="pkg-select-indicator" [class.selected]="isSelected(pkg)">
+            @if (isSelected(pkg)) {
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7l3.5 3.5L12 3" stroke="#080B12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            }
+          </div>
+        </div>
+        <div class="pkg-price-row">
+          @if (pkg.was) { <span class="pkg-was">{{ pkg.was }}</span> }
+          <span class="pkg-price">{{ pkg.price }}</span>
+          <span class="pkg-delivery">⏱ {{ pkg.deliveryDays }}</span>
+        </div>
+        <ul class="pkg-feats">
+          @for (f of pkg.features; track f) {
+            <li>✦ {{ f }}</li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+
+  <!-- Deposit summary -->
+  <div class="deposit-summary">
+    <div class="deposit-left">
+      <h4>Booking Fee</h4>
+      <p class="text-muted text-sm font-light">
+        Pay ₦5,000 now to confirm your slot. This is <strong class="text-blue-700">100% credited</strong>
+        toward your {{ selectedPkg()?.price ?? 'project' }} total.
+      </p>
+      <div class="refund-note">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <circle cx="6" cy="6" r="5" stroke="#8892A4" stroke-width="1.1"/>
+          <path d="M6 5v3M6 4h.01" stroke="#8892A4" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        If you change your mind before we start, ₦5,000 is refundable.
+      </div>
+    </div>
+    <div class="deposit-right">
+      <span class="deposit-amount">₦5,000</span>
+      <span class="deposit-label">today</span>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="step-actions">
+    <button class="btn-back" (click)="back()">← Back</button>
+    <button class="btn-pay" (click)="proceed()" [disabled]="!selectedPkg()">
+      Pay ₦5,000 Deposit & Confirm Slot →
+    </button>
+  </div>
+
+</div>

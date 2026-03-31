@@ -1,0 +1,63 @@
+<div class="step-success">
+
+  <!-- Confetti header -->
+  <div class="success-hero">
+    <div class="success-icon">✅</div>
+    <h2>You're In! <span class="text-blue-700">Slot Confirmed.</span></h2>
+    <p class="text-muted text-sm leading-relaxed max-w-md mx-auto font-light">
+      Your Booking confirmed! Your slot is reserved.. Welcome to Marvick Springville,
+      <strong class="text-white">{{ firstName }}</strong>.
+      Your business is about to change.
+    </p>
+  </div>
+
+  <!-- Receipt card -->
+  <div class="receipt-card">
+    <div class="receipt-header">
+      <span class="receipt-label">Payment Receipt</span>
+      <button class="receipt-download" (click)="saveRef()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Save
+      </button>
+    </div>
+    <div class="receipt-body">
+      <div class="r-row"><span>Reference</span><code>{{ refCode }}</code></div>
+      <div class="r-row"><span>Amount Paid</span><strong class="text-blue-700">₦10,000</strong></div>
+      <div class="r-row"><span>Package</span><span>{{ pkgName }}</span></div>
+      <div class="r-row"><span>Project Total</span><span>{{ pkgPrice }}</span></div>
+      <div class="r-row"><span>Balance Due</span><span class="text-muted">On project commencement</span></div>
+      <div class="r-row"><span>Date</span><span>{{ today }}</span></div>
+    </div>
+  </div>
+
+  <!-- What happens next -->
+  <div class="next-steps">
+    <h3>What Happens Next</h3>
+    <div class="steps-list">
+      @for (item of nextSteps; track item.step) {
+        <div class="next-step">
+          <div class="step-num">{{ item.step }}</div>
+          <div class="step-body">
+            <strong>{{ item.title }}</strong>
+            <p class="text-muted text-sm font-light mt-0.5">{{ item.desc }}</p>
+          </div>
+          <span class="step-time">{{ item.time }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- WhatsApp CTA -->
+  <div class="wa-cta">
+    <div>
+      <strong>Questions? We're on WhatsApp.</strong>
+      <p class="text-muted text-sm font-light mt-1">
+        A confirmation message has been opened for you. Send it so we have your contact saved.
+      </p>
+    </div>
+    <a routerLink="/" class="btn-home">Back to Home →</a>
+  </div>
+
+</div>

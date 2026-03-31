@@ -1,0 +1,45 @@
+<section id="pain" class="pain-section">
+  <!-- Background effects -->
+  <div class="bg-glow-left"></div>
+  <div class="bg-glow-right"></div>
+
+  <div class="container mx-auto px-6 lg:px-16 py-24 relative z-10">
+
+    <!-- Header -->
+    <div class="max-w-2xl mb-16">
+      <p class="section-label">The Hard Truth</p>
+      <h2 class="section-title">
+        You Think You're Doing Well.<br/>
+        <span class="text-blue-800">Your Business Disagrees.</span>
+      </h2>
+      <p class="text-muted text-base leading-relaxed font-light">
+        Most small business owners don't know what they're losing — because they never see the
+        customers who couldn't find them. Here's what's silently killing your revenue every day.
+      </p>
+    </div>
+
+    <!-- Pain cards grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gold/10 border border-gold/10">
+      @for (pain of pains; track pain.title) {
+        <div class="pain-card group">
+          <div class="pain-icon">{{ pain.icon }}</div>
+          <h3 class="text-base font-semibold mb-2 text-slate-800 group-hover:text-gold transition-colors">
+            {{ pain.title }}
+          </h3>
+          <p class="text-muted text-sm leading-relaxed font-light">{{ pain.desc }}</p>
+          <div class="pain-bar"></div>
+        </div>
+      }
+    </div>
+
+    <!-- Pull quote -->
+    <div class="quote-block mt-16">
+      <div class="quote-line"></div>
+      <p class="quote-text">
+        "The business losing the most money is not the one with no customers —
+        it is the one with customers it <span class="text-accent font-semibold">never even knew it had.</span>"
+      </p>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,23 @@
+.site-footer {
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+  padding: 4rem 0 2rem;
+  position: relative; overflow: hidden;
+}
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; padding-bottom: 2rem;
+}
+.brand-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); }
+.footer-links {
+  display: flex; flex-direction: column; gap: 0.75rem;
+  .link-heading { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; font-weight: 600; }
+  a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s;
+    &:hover { color: var(--gold); } }
+}
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+  p { font-size: 0.78rem; color: var(--muted-2); } }
+@media (max-width: 768px) {
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+@media (max-width: 480px) { .footer-top { grid-template-columns: 1fr; } }

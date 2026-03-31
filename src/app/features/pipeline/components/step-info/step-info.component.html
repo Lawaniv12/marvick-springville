@@ -1,0 +1,120 @@
+<div class="step-info">
+  <div class="step-header">
+    <h2>Tell Us About <span class="text-blue-700">Your Business</span></h2>
+    <p class="text-muted text-sm leading-relaxed">
+      Fill in your details below. This takes about 2 minutes and helps us
+      prepare a personalised package summary for you before payment.
+    </p>
+  </div>
+
+  <form class="intake-form" (ngSubmit)="submit()" #f="ngForm" novalidate>
+
+    <!-- Row 1: Name + Phone -->
+    <div class="form-row">
+      <div class="field-group" [class.has-error]="hasError('fullName')">
+        <label>Full Name <span class="req">*</span></label>
+        <input type="text" [(ngModel)]="form.fullName" name="fullName"
+          placeholder="e.g. Amina Yusuf" autocomplete="name"/>
+        @if (hasError('fullName')) { <span class="field-error">{{ getError('fullName') }}</span> }
+      </div>
+      <div class="field-group" [class.has-error]="hasError('phone')">
+        <label>WhatsApp / Phone <span class="req">*</span></label>
+        <input type="tel" [(ngModel)]="form.phone" name="phone"
+          placeholder="e.g. 08012345678" autocomplete="tel"/>
+        @if (hasError('phone')) { <span class="field-error">{{ getError('phone') }}</span> }
+      </div>
+    </div>
+
+    <!-- Email (optional) -->
+    <div class="field-group">
+      <label>Email Address <span class="opt">(optional)</span></label>
+      <input type="email" [(ngModel)]="form.email" name="email"
+        placeholder="yourname@email.com" autocomplete="email"/>
+    </div>
+
+    <!-- Row 2: Business Name + Type -->
+    <div class="form-row">
+      <div class="field-group" [class.has-error]="hasError('businessName')">
+        <label>Business Name <span class="req">*</span></label>
+        <input type="text" [(ngModel)]="form.businessName" name="businessName"
+          placeholder="e.g. Amina's Catering"/>
+        @if (hasError('businessName')) { <span class="field-error">{{ getError('businessName') }}</span> }
+      </div>
+      <div class="field-group" [class.has-error]="hasError('businessType')">
+        <label>Business Type <span class="req">*</span></label>
+        <select [(ngModel)]="form.businessType" name="businessType">
+          <option value="">Select your industry</option>
+          @for (type of businessTypes; track type) {
+            <option [value]="type">{{ type }}</option>
+          }
+        </select>
+        @if (hasError('businessType')) { <span class="field-error">{{ getError('businessType') }}</span> }
+      </div>
+    </div>
+
+    <!-- Service wanted -->
+    <div class="field-group" [class.has-error]="hasError('serviceWanted')">
+      <label>What service are you interested in? <span class="req">*</span></label>
+      <div class="service-pills">
+        @for (svc of serviceOptions; track svc) {
+          <button type="button" class="pill" [class.pill-active]="form.serviceWanted === svc"
+            (click)="form.serviceWanted = svc">
+            {{ svc }}
+          </button>
+        }
+      </div>
+      @if (hasError('serviceWanted')) { <span class="field-error">{{ getError('serviceWanted') }}</span> }
+    </div>
+
+    <!-- Budget range -->
+    <div class="field-group" [class.has-error]="hasError('budgetRange')">
+      <label>What is your budget range? <span class="req">*</span></label>
+      <div class="budget-pills">
+        @for (range of budgetRanges; track range) {
+          <button type="button" class="pill" [class.pill-active]="form.budgetRange === range"
+            (click)="form.budgetRange = range">
+            {{ range }}
+          </button>
+        }
+      </div>
+      @if (hasError('budgetRange')) { <span class="field-error">{{ getError('budgetRange') }}</span> }
+    </div>
+
+    <!-- Heard from -->
+    <div class="field-group" [class.has-error]="hasError('heardFrom')">
+      <label>How did you hear about us? <span class="req">*</span></label>
+      <select [(ngModel)]="form.heardFrom" name="heardFrom">
+        <option value="">Select one</option>
+        @for (h of heardFrom; track h) {
+          <option [value]="h">{{ h }}</option>
+        }
+      </select>
+      @if (hasError('heardFrom')) { <span class="field-error">{{ getError('heardFrom') }}</span> }
+    </div>
+
+    <!-- Message (optional) -->
+    <div class="field-group">
+      <label>Anything else we should know? <span class="opt">(optional)</span></label>
+      <textarea [(ngModel)]="form.message" name="message" rows="3"
+        placeholder="Tell us about your business, what you'd like the website to do, any specific requirements..."></textarea>
+    </div>
+
+    <!-- Deposit notice -->
+    <div class="deposit-notice">
+      <div class="notice-icon">💡</div>
+      <div>
+        <strong>Discovery Deposit — ₦10,000</strong>
+        <p>After submitting this form, you'll see your package summary and pay a ₦10,000 Discovery Deposit. This is <em>100% credited</em> toward your project cost — it just confirms your seriousness so we can prioritise your slot.</p>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn" [disabled]="submitting()">
+      @if (submitting()) {
+        <span class="spinner"></span> Processing...
+      } @else {
+        See My Package & Continue →
+      }
+    </button>
+
+  </form>
+</div>

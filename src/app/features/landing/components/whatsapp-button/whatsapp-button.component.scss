@@ -1,0 +1,22 @@
+.wa-float {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+  opacity: 0; transform: translateY(16px) scale(0.92); pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.wa-visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+.wa-btn {
+  display: flex; align-items: center; gap: 0.6rem;
+  background: #1DA851; color: #fff; border: none; border-radius: 100px;
+  padding: 0.8rem 1.5rem 0.8rem 1.1rem;
+  font-size: 0.88rem; font-weight: 600; cursor: pointer;
+  position: relative; overflow: hidden;
+  box-shadow: 0 4px 24px rgba(29,168,81,0.3), 0 0 0 1px rgba(29,168,81,0.15);
+  transition: transform 0.15s, box-shadow 0.15s;
+  &:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(29,168,81,0.4), 0 0 0 1px rgba(29,168,81,0.2); }
+}
+.wa-glow {
+  position: absolute; inset: 0; border-radius: 100px;
+  background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.15), transparent 60%);
+  pointer-events: none;
+}
+.wa-label { position: relative; z-index: 1; }

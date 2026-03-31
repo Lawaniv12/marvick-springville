@@ -1,0 +1,109 @@
+<section class="offer-section" id="offer">
+  <div class="offer-bg-glow"></div>
+
+  <div class="container mx-auto px-6 lg:px-16 py-24 relative z-10">
+
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <div class="inline-flex items-center gap-2 mb-4">
+        <span class="text-lg">🔥</span>
+        <span class="promo-badge">Limited Promo — This Month Only</span>
+      </div>
+      <h2 class="section-title">
+        Choose the Package That <span class="text-blue-800">Fits Your Business</span>
+      </h2>
+      <p class="text-muted text-sm mt-2 leading-relaxed">
+        Every package is custom-built for you — not a template. Prices in Nigerian Naira.
+        Slots are limited this month.
+      </p>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown-row">
+      <span class="countdown-label">Promo ends in:</span>
+      <div class="count-box"><span class="count-num">{{ days() }}</span><span class="count-unit">Days</span></div>
+      <span class="count-sep">:</span>
+      <div class="count-box"><span class="count-num">{{ hours() }}</span><span class="count-unit">Hrs</span></div>
+      <span class="count-sep">:</span>
+      <div class="count-box"><span class="count-num">{{ mins() }}</span><span class="count-unit">Mins</span></div>
+      <span class="count-sep">:</span>
+      <div class="count-box"><span class="count-num">{{ secs() }}</span><span class="count-unit">Secs</span></div>
+    </div>
+
+    <!-- Category tabs -->
+    <div class="category-tabs">
+      <button class="tab-btn" [class.active]="activeCategory() === 'web'" (click)="setCategory('web')">
+        <span>🌐</span> Websites & Funnels
+      </button>
+      <button class="tab-btn" [class.active]="activeCategory() === 'app'" (click)="setCategory('app')">
+        <span>📱</span> Apps & Platforms
+      </button>
+    </div>
+
+    <!-- Package grid -->
+    <div class="packages-grid" [class.three-col]="activeCategory() === 'app'">
+      @for (pkg of currentPackages(); track pkg.id) {
+        <div class="pkg-card" [class.pkg-featured]="pkg.highlight">
+
+          @if (pkg.badge) {
+            <div class="pkg-badge-top">{{ pkg.badge }}</div>
+          }
+
+          <div class="pkg-header">
+            <!-- <div class="pkg-icon">{{ pkg.icon }}</div> -->
+            <div>
+              <h3 class="pkg-name">{{ pkg.name }}</h3>
+              <p class="pkg-tagline">{{ pkg.tagline }}</p>
+            </div>
+          </div>
+
+          <div class="pkg-pricing">
+            @if (pkg.was) { <span class="pkg-was">{{ pkg.was }}</span> }
+            <span class="pkg-price" [class.pkg-price-custom]="pkg.price === 'Custom'">{{ pkg.price }}</span>
+            <div class="pkg-delivery">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.1"/>
+                <path d="M6 3v3.5l2 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+              </svg>
+              Delivered in {{ pkg.deliveryDays }}
+            </div>
+          </div>
+
+          <div class="pkg-ideal"><span class="ideal-label">Ideal for: </span>{{ pkg.idealFor }}</div>
+          <div class="pkg-divider"></div>
+
+          <ul class="pkg-features">
+            @for (f of pkg.features; track f) {
+              <li>
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                  <path d="M2 6.5l3 3 6-5.5" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {{ f }}
+              </li>
+            }
+          </ul>
+
+          <button class="pkg-cta" [class.pkg-cta-featured]="pkg.highlight" (click)="inquire(pkg)">
+            {{ pkg.cta }}
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- Footer note -->
+    <div class="offer-footer">
+      <div class="offer-note">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <circle cx="7" cy="7" r="6" stroke="var(--blue)" stroke-width="1.2"/>
+          <path d="M7 6v4M7 4h.01" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Not sure which package you need? Message us — we'll advise you honestly, no pressure.
+      </div>
+      <button class="btn-primary text-sm" (click)="askForAdvice()">Get Free Advice →</button>
+    </div>
+
+  </div>
+</section>

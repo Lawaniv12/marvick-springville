@@ -1,0 +1,12 @@
+.process-section { background: var(--surface-2); position: relative; overflow: hidden; }
+.steps-container { display: flex; flex-direction: column; gap: 0; max-width: 800px; position: relative; }
+.step-row { display: flex; align-items: flex-start; gap: 1.5rem; position: relative; padding-bottom: 0; }
+.step-connector { position: absolute; left: 27px; top: 56px; width: 1px; height: calc(100% + 1.5rem); background: linear-gradient(to bottom, var(--border-2), var(--border)); z-index: 0; }
+.step-number { width: 56px; height: 56px; flex-shrink: 0; border: 1.5px solid var(--border-2); display: flex; align-items: center; justify-content: center; background: var(--surface); position: relative; z-index: 1; margin-bottom: 1.5rem; border-radius: 4px; box-shadow: 0 1px 4px rgba(15,23,42,0.06); }
+.num-text { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--blue); }
+.step-content { margin-bottom: 1.5rem; }
+.step-content h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+.step-content p { font-size: 0.86rem; color: var(--muted); line-height: 1.75; }
+.step-tag { display: inline-block; background: rgba(8,145,178,0.06); border: 1px solid rgba(8,145,178,0.2); color: var(--cyan); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.7rem; border-radius: 4px; margin-top: 0.5rem; font-weight: 500; }
+.step-icon { font-size: 1.8rem; flex-shrink: 0; opacity: 0.7; }
+.f-card { background: var(--surface); border: 1px solid var(--border); }
