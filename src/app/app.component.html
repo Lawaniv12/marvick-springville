@@ -1,3 +1,28 @@
- <app-navbar />
-    <main><router-outlet /></main>
-  <app-footer />
+@if (loading()) {
+      <div class="ms-loader" [class.ms-loader--fade]="fading()">
+        <div class="ms-loader__inner">
+ 
+          <div class="ms-loader__brand">
+            <div class="ms-loader__squares">
+              <div class="ms-sq ms-sq--1"></div>
+              <div class="ms-sq ms-sq--2"></div>
+              <div class="ms-sq ms-sq--3"></div>
+              <div class="ms-sq ms-sq--4"></div>
+            </div>
+            <div class="ms-loader__wordmark">
+              <strong>Marvick</strong>
+              <em>Springville</em>
+            </div>
+          </div>
+ 
+          <p class="ms-loader__tagline">Building something great for you...</p>
+ 
+        </div>
+      </div>
+    }
+ 
+    <div class="ms-app" [class.ms-app--ready]="!loading()">
+      <app-navbar />
+      <main><router-outlet /></main>
+      <app-footer />
+    </div>

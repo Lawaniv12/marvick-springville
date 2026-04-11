@@ -114,3 +114,141 @@ body {
 @keyframes scroll-anim { 0% { top: -16px; } 100% { top: 48px; } }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes pop  { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+
+/* ═══════════════════════════════════════════════
+   PAGE LOADER — Marvick Springville (Option A)
+   ═══════════════════════════════════════════════ */
+ 
+.ms-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.65s ease, visibility 0.65s ease;
+}
+ 
+.ms-loader--fade {
+  opacity: 0;
+  visibility: hidden;
+}
+ 
+.ms-loader__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  animation: msReveal 0.45s ease both;
+}
+ 
+@keyframes msReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+/* Brand lockup */
+.ms-loader__brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+ 
+/* 2×2 square grid — mirrors the real logo */
+.ms-loader__squares {
+  display: grid;
+  grid-template-columns: repeat(2, 18px);
+  grid-template-rows: repeat(2, 18px);
+  gap: 4px;
+}
+ 
+.ms-sq {
+  border-radius: 3px;
+}
+ 
+/* Dark navy squares */
+.ms-sq--1 { background: #1E3A8A; animation: scatterTL 2s ease-in-out infinite; }
+.ms-sq--4 { background: #1E3A8A; animation: scatterBR 2s ease-in-out infinite; }
+ 
+/* Light blue squares */
+.ms-sq--2 { background: #93C5FD; animation: scatterTR 2s ease-in-out infinite; }
+.ms-sq--3 { background: #93C5FD; animation: scatterBL 2s ease-in-out infinite; }
+ 
+@keyframes scatterTL {
+  0%, 100% { transform: translate(0, 0);     opacity: 1; }
+  35%       { transform: translate(-9px, -9px); opacity: 0.2; }
+  65%       { transform: translate(-3px, -3px); opacity: 0.7; }
+}
+@keyframes scatterTR {
+  0%, 100% { transform: translate(0, 0);    opacity: 1; }
+  35%       { transform: translate(9px, -9px); opacity: 0.2; }
+  65%       { transform: translate(3px, -3px); opacity: 0.7; }
+}
+@keyframes scatterBL {
+  0%, 100% { transform: translate(0, 0);    opacity: 1; }
+  35%       { transform: translate(-9px, 9px); opacity: 0.2; }
+  65%       { transform: translate(-3px, 3px); opacity: 0.7; }
+}
+@keyframes scatterBR {
+  0%, 100% { transform: translate(0, 0);   opacity: 1; }
+  35%       { transform: translate(9px, 9px); opacity: 0.2; }
+  65%       { transform: translate(3px, 3px); opacity: 0.7; }
+}
+ 
+/* Wordmark beside the squares */
+.ms-loader__wordmark {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+ 
+  strong {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1E3A8A;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+ 
+  em {
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #94A3B8;
+    line-height: 1;
+  }
+}
+ 
+/* Tagline */
+.ms-loader__tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #CBD5E1;
+  letter-spacing: 0.04em;
+  animation: taglineFade 2s ease-in-out infinite;
+}
+ 
+@keyframes taglineFade {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+ 
+/* App shell — hidden until loader dismisses */
+.ms-app {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+ 
+.ms-app--ready {
+  opacity: 1;
+  pointer-events: all;
+}
