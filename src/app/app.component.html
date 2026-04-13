@@ -1,7 +1,6 @@
 @if (loading()) {
       <div class="ms-loader" [class.ms-loader--fade]="fading()">
         <div class="ms-loader__inner">
- 
           <div class="ms-loader__brand">
             <div class="ms-loader__squares">
               <div class="ms-sq ms-sq--1"></div>
@@ -14,15 +13,19 @@
               <em>Springville</em>
             </div>
           </div>
- 
           <p class="ms-loader__tagline">Building something great for you...</p>
- 
         </div>
       </div>
     }
  
+    <!-- App Shell -->
+    <!-- Navbar + Footer hidden on /music — music shell has its own layout -->
     <div class="ms-app" [class.ms-app--ready]="!loading()">
-      <app-navbar />
+      @if (!isMusicRoute()) {
+        <app-navbar />
+      }
       <main><router-outlet /></main>
-      <app-footer />
+      @if (!isMusicRoute()) {
+        <app-footer />
+      }
     </div>

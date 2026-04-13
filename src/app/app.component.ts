@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +13,22 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
 })
 export class AppComponent {
   title = 'marvick-springville-ltd';
-  loading = signal(true);
-  fading  = signal(false);
+  private router = inject(Router);
+  loading      = signal(true);
+  fading       = signal(false);
+  isMusicRoute = signal(false);
  
   ngOnInit() {
+    // Track active route to toggle navbar/footer
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((e: NavigationEnd) => {
+        this.isMusicRoute.set(e.urlAfterRedirects.startsWith('/music'));
+      });
+ 
+    // Page loader
     const minDisplay = 2400;
     const start = Date.now();
- 
     const finish = () => {
       const elapsed   = Date.now() - start;
       const remaining = Math.max(0, minDisplay - elapsed);
